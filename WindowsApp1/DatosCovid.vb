@@ -1,53 +1,9 @@
 ﻿Imports System.ComponentModel
 
+
 Public Class DatosCovid
-    Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
-        Dim Nombre, Edad, Departamento, Municipio As String
-        Dim Activo, Muerto, Recuperado, Positivo As Boolean
-        Try
-            If Me.ValidateChildren And txtNombre.Text <> String.Empty And txtEdad.Text <> String.Empty And txtMunicipio.Text <> String.Empty And txtDepartamento.Text <> String.Empty Then
-                Nombre = Val(txtNombre.Text)
-                Edad = Val(txtEdad.Text)
-                Departamento = Val(txtDepartamento.Text)
-                Municipio = Val(txtMunicipio.Text)
-                chbPositivo.Checked = Positivo
-                If chbNegativo.Checked = True Then
-                    chbRecuperado.Checked = False
-                    chbMuerto.Checked = False
-                    chbActivo.Checked = False
-                Else
-                    If Positivo = True Then
-                        Activo = chbActivo.Checked
-                        Muerto = chbMuerto.Checked
-                        Recuperado = chbRecuperado.Checked
-                        Dim i As Integer
-                        Select Case cmbDepartamentos.SelectedIndex
-
-                            Case 0
-                                For i = 1 To Positivo Step 1
-                                    lbxHistorial.Items.Add(Positivo)
-                                Next
-                            Case 1
-
-                        End Select
-
-
-                    End If
-                End If
-            Else
-                MessageBox.Show("Revise los datos ingresados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
-
-    Private Sub cmbDepartamentos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDepartamentos.SelectedIndexChanged
-        cmbDepartamentos.Items.Add("Francisco Morazán")
-        cmbDepartamentos.Items.Add("Comayagua")
-    End Sub
-
+    'Ing Me esfocé mucho :'v
+    Dim Cont2, cont1, cont3, cont4 As Integer
     Private Sub txtNombre_TextChanged(sender As Object, e As EventArgs) Handles txtNombre.TextChanged
 
     End Sub
@@ -73,16 +29,35 @@ Public Class DatosCovid
         End If
     End Sub
 
-    Private Sub txtDepartamento_TextChanged(sender As Object, e As EventArgs) Handles txtDepartamento.TextChanged
+    Private Sub chbRecuperado_CheckedChanged(sender As Object, e As EventArgs) Handles chbRecuperado.CheckedChanged
+        If chbRecuperado.Checked = True Then
+            chbMuerto.Enabled = False
+            chbActivo.Enabled = False
+            cmbEstado.Enabled = False
+        Else
+            chbMuerto.Enabled = True
+            chbActivo.Enabled = True
+            cmbEstado.Enabled = True
+        End If
+        cont3 = cont3 + 1
 
+        lblRecup.Text = cont3 - 1
     End Sub
 
-    Private Sub txtDepartamento_Validating(sender As Object, e As CancelEventArgs) Handles txtDepartamento.Validating
-        If DirectCast(sender, TextBox).Text.Length > 0 Then
-            Me.errorValidacion.SetError(sender, "")
+    Private Sub chbMuerto_CheckedChanged(sender As Object, e As EventArgs) Handles chbMuerto.CheckedChanged
+        If chbMuerto.Checked = True Then
+            chbRecuperado.Enabled = False
+            chbActivo.Enabled = False
+            cmbEstado.Enabled = False
         Else
-            Me.errorValidacion.SetError(sender, "Es un campo obligarorio")
+            chbRecuperado.Enabled = True
+            chbActivo.Enabled = True
+            cmbEstado.Enabled = True
+
         End If
+        Cont2 = Cont2 + 1
+        lblFallecidos.Text = Cont2 - 1
+
     End Sub
 
     Private Sub txtMunicipio_TextChanged(sender As Object, e As EventArgs) Handles txtMunicipio.TextChanged
@@ -109,15 +84,113 @@ Public Class DatosCovid
         ToolTip1.ToolTipIcon = ToolTipIcon.Info
     End Sub
 
-    Private Sub txtDepartamento_MouseHover(sender As Object, e As EventArgs) Handles txtDepartamento.MouseHover
-        ToolTip1.SetToolTip(txtDepartamento, "Ingrese el departamento")
-        ToolTip1.ToolTipTitle = "Usuario"
-        ToolTip1.ToolTipIcon = ToolTipIcon.Info
-    End Sub
 
     Private Sub txtMunicipio_MouseHover(sender As Object, e As EventArgs) Handles txtMunicipio.MouseHover
         ToolTip1.SetToolTip(txtMunicipio, "Ingrese el municipio")
         ToolTip1.ToolTipTitle = "Usuario"
         ToolTip1.ToolTipIcon = ToolTipIcon.Info
+    End Sub
+
+    Private Sub chbPositivo_CheckedChanged(sender As Object, e As EventArgs) Handles chbPositivo.CheckedChanged
+        cont1 = cont1 + 1
+        lblPositivos.Text = cont1 - 1
+
+    End Sub
+
+    Private Sub chbActivo_CheckedChanged(sender As Object, e As EventArgs) Handles chbActivo.CheckedChanged
+        cont4 = cont4 + 1
+        lblActivos.Text = cont4 - 1
+    End Sub
+
+    Private Sub btnCerrar_Click(sender As Object, e As EventArgs) Handles btnCerrar.Click
+        Login.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
+
+
+        txtMunicipio.Clear()
+        txtNombre.Clear()
+        txtEdad.Clear()
+        txtDepartamentos.Clear()
+        chbActivo.Checked = False
+        chbMuerto.Checked = False
+        chbNegativo.Checked = False
+        chbPositivo.Checked = False
+        chbRecuperado.Checked = False
+
+
+    End Sub
+
+    Private Sub chbNegativo_CheckedChanged(sender As Object, e As EventArgs) Handles chbNegativo.CheckedChanged
+        If chbNegativo.Checked = True Then
+            chbMuerto.Enabled = False
+            chbActivo.Enabled = False
+            chbRecuperado.Enabled = False
+            cmbEstado.Enabled = False
+
+            chbPositivo.Enabled = False
+        Else
+            chbMuerto.Enabled = True
+            chbActivo.Enabled = True
+            chbRecuperado.Enabled = True
+            cmbEstado.Enabled = True
+            chbPositivo.Enabled = True
+        End If
+        cont1 = cont3 - 1
+    End Sub
+
+    Private Sub btn_Click(sender As Object, e As EventArgs) Handles btnMostrar.Click
+
+        Dim Estado, resultado, Estado1 As String
+        Try
+            If Me.ValidateChildren And txtNombre.Text <> String.Empty And txtEdad.Text <> String.Empty And txtMunicipio.Text <> String.Empty Then
+                If chbPositivo.Checked = True Then
+                    resultado = " Positivo "
+                Else
+                    If chbNegativo.Checked = True Then
+                        resultado = " Negativo "
+                        lbxHistorial.Items.Add(txtNombre.Text & "        " & txtMunicipio.Text & "     " & txtDepartamentos.Text & "     " & resultado)
+                    End If
+
+                End If
+
+                If chbActivo.Checked = True Then
+                    Estado = " Activo "
+
+
+                    Select Case cmbEstado.SelectedIndex
+                        Case 0
+                            Estado1 = " Estable "
+                        Case 1
+                            Estado1 = " Cuidado Intensivo "
+                    End Select
+                    lbxHistorial.Items.Add(txtNombre.Text & "        " & txtMunicipio.Text & "     " & txtDepartamentos.Text & "     " & resultado & "     " & Estado & " : " & Estado1)
+                ElseIf chbMuerto.Checked = True Then
+                    Estado = " Fallecido "
+
+
+                    lbxHistorial.Items.Add(txtNombre.Text & "        " & txtMunicipio.Text & "     " & txtDepartamentos.Text & "     " & resultado & "     " & Estado)
+                End If
+                If chbRecuperado.Checked = True Then
+                    Estado = " Recuperado "
+
+
+                    lbxHistorial.Items.Add(txtNombre.Text & "        " & txtMunicipio.Text & "     " & txtDepartamentos.Text & "     " & resultado & "     " & Estado)
+                End If
+
+
+
+
+            Else
+                MessageBox.Show("Revise los datos ingresados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+
     End Sub
 End Class

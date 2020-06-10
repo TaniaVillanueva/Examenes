@@ -1,14 +1,11 @@
 ﻿Imports System.ComponentModel
 
-Public Class Form1
+Public Class Login
     Private Sub btnAceptar_Click(sender As Object, e As EventArgs) Handles btnAceptar.Click
-        Dim usuario As String
-        Dim contraseña As String
-        If Me.ValidateChildren And txtUsuario.Text <> String.Empty And txtContraseña.Text <> String.Empty Then
-            usuario = Val(txtUsuario.Text)
-            contraseña = Val(txtContraseña.Text)
 
-            If usuario = "Administrador" And contraseña = "SinHacer2020" Then
+        If Me.ValidateChildren And txtUsuario.Text <> String.Empty And txtContraseña.Text <> String.Empty Then
+
+            If (txtUsuario.Text = "Administrador") And (txtContraseña.Text = "SinHacer2020") Then
                 DatosCovid.Show()
                 Me.Hide()
             Else
@@ -57,7 +54,9 @@ Public Class Form1
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         Dim opcion As DialogResult
-        opcion = MessageBox.Show("¿Desea salir?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-
+        opcion = MessageBox.Show("Desea salir?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If opcion = DialogResult.Yes Then
+            Me.Close()
+        End If
     End Sub
 End Class
