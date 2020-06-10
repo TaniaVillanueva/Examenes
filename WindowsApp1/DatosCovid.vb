@@ -29,36 +29,6 @@ Public Class DatosCovid
         End If
     End Sub
 
-    Private Sub chbRecuperado_CheckedChanged(sender As Object, e As EventArgs) Handles chbRecuperado.CheckedChanged
-        If chbRecuperado.Checked = True Then
-            chbMuerto.Enabled = False
-            chbActivo.Enabled = False
-            cmbEstado.Enabled = False
-        Else
-            chbMuerto.Enabled = True
-            chbActivo.Enabled = True
-            cmbEstado.Enabled = True
-        End If
-        cont3 = cont3 + 1
-
-        lblRecup.Text = cont3 - 1
-    End Sub
-
-    Private Sub chbMuerto_CheckedChanged(sender As Object, e As EventArgs) Handles chbMuerto.CheckedChanged
-        If chbMuerto.Checked = True Then
-            chbRecuperado.Enabled = False
-            chbActivo.Enabled = False
-            cmbEstado.Enabled = False
-        Else
-            chbRecuperado.Enabled = True
-            chbActivo.Enabled = True
-            cmbEstado.Enabled = True
-
-        End If
-        Cont2 = Cont2 + 1
-        lblFallecidos.Text = Cont2 - 1
-
-    End Sub
 
     Private Sub txtMunicipio_TextChanged(sender As Object, e As EventArgs) Handles txtMunicipio.TextChanged
 
@@ -92,14 +62,57 @@ Public Class DatosCovid
     End Sub
 
     Private Sub chbPositivo_CheckedChanged(sender As Object, e As EventArgs) Handles chbPositivo.CheckedChanged
-        cont1 = cont1 + 1
-        lblPositivos.Text = cont1 - 1
+        If chbPositivo.Checked = True Then
+            cont1 = cont1 + 1
+        Else
+            cont4 = cont4 - 1
+        End If
+        lblPositivos.Text = cont1
 
     End Sub
 
     Private Sub chbActivo_CheckedChanged(sender As Object, e As EventArgs) Handles chbActivo.CheckedChanged
-        cont4 = cont4 + 1
-        lblActivos.Text = cont4 - 1
+        If chbActivo.Checked = True Then
+            cont4 = cont4 + 1
+        Else
+            cont4 = cont4 - 1
+        End If
+        lblActivos.Text = cont4
+    End Sub
+    Private Sub chbMuerto_CheckedChanged(sender As Object, e As EventArgs) Handles chbMuerto.CheckedChanged
+        If chbMuerto.Checked = True Then
+            chbRecuperado.Enabled = False
+            chbActivo.Enabled = False
+            cmbEstado.Enabled = False
+            Cont2 = Cont2 + 1
+        Else
+            chbRecuperado.Enabled = True
+            chbActivo.Enabled = True
+            cmbEstado.Enabled = True
+            Cont2 = Cont2 - 1
+
+        End If
+
+        lblFallecidos.Text = Cont2
+
+
+    End Sub
+
+    Private Sub chbRecuperado_CheckedChanged(sender As Object, e As EventArgs) Handles chbRecuperado.CheckedChanged
+        If chbRecuperado.Checked = True Then
+            cont3 = cont3 + 1
+            chbMuerto.Enabled = False
+            chbActivo.Enabled = False
+            cmbEstado.Enabled = False
+        Else
+            chbMuerto.Enabled = True
+            chbActivo.Enabled = True
+            cmbEstado.Enabled = True
+            cont3 = cont3 - 1
+        End If
+
+
+        lblRecup.Text = cont3
     End Sub
 
     Private Sub btnCerrar_Click(sender As Object, e As EventArgs) Handles btnCerrar.Click
@@ -138,10 +151,12 @@ Public Class DatosCovid
             cmbEstado.Enabled = True
             chbPositivo.Enabled = True
         End If
-        cont1 = cont3 - 1
+
     End Sub
 
     Private Sub btn_Click(sender As Object, e As EventArgs) Handles btnMostrar.Click
+
+
 
         Dim Estado, resultado, Estado1 As String
         Try
